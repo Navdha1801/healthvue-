@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<meta charset="utf-8" />
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Type and Medical Condition</title>
+</head>
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<style>
+  h1 {
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .home-button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 16px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+
+  .home-button:hover {
+    background-color: #45a049;
+  }
+</style>
+<h1>Relation Between Blood Type and Medical Condition</h1>
+<div id="my_dataviz"></div>
+<div>
+  <button class="home-button" onclick="returnHome()">Return Home</button>
+</div>
+<script>
+  var margin = { top: 10, right: 10, bottom: 10, left: 10 },
+    width = 900 - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom;
+
+  //svg
+  var svg = d3
+    .select("#my_dataviz")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // Loading data
+  d3.csv("q6.csv", function (data) {
+    
+    var medicalConditions = d3   // Nesting the data by Medical Condition and Blood Type
+      .nest()
+      .key(function (d) {
+        return d["Medical Condition"];
+      })
+      .rollup(function (leaves) {
+        var bloodTypes = d3
+          .nest()
+          .key(function (d) {
+            return d["Blood Type"];
+          })
+          .rollup(function (v) {
+            return d3.sum(v, function (d) {
+              return d["Number of Individuals"];
+            });
+          })
+          .entries(leaves);
+        return { "Blood Types": bloodTypes };
+      })
+      .entries(data);
+
+    // treemap layout
+    var treemap = d3
+      .treemap()
+      .size([width, height])
+      .paddingInner(2)
+      .paddingOuter(15);
+
+    // hierarchical data structure
+    var root = {
+      name: "root",
+      children: medicalConditions.map(function (d) {
+        return {
+          name: d.key,
+          children: d.value["Blood Types"].map(function (b) {
+            return { name: b.key, value: b.value };
+          }),
+        };
+      }),
+    };
+
+    root = d3
+      .hierarchy(root)
+      .sum(function (d) {
+        return d.value;
+      })
+      .sort(function (a, b) {
+        return b.value - a.value;
+      });
+
+    treemap(root);
+
+    // Define the color scales for medical conditions and blood types
+    var conditionColors = d3
+      .scaleOrdinal()
+      .domain(
+        root.children.map(function (d) {
+          return d.data.name;
+        })
+      )
+      .range([
+        "#01befe",
+        "#ffdd00",
+        "#ff7d00",
+        "#ff006d",
+        "#adff02",
+        "#8f00ff",
+      ]);
+
+    var customColors = [
+      "#01befe",
+      "#ffdd00",
+      "#ff7d00",
+      "#ff006d",
+      "#adff02",
+      "#8f00ff",
+    ];
+
+    var bloodTypeColors = d3
+      .scaleOrdinal()
+      .domain(
+        root.children.map(function (d) {
+          return d.data.name;
+        })
+      )
+      .range(
+        customColors.map(function (color) {
+          return d3
+            .scaleSequential()
+            .domain([1, 0])
+            .interpolator(d3.interpolateRgb(color, "#ffffff"));
+        })
+      );
+
+    var bloodTypeExtent = d3.extent(root.leaves(), function (d) {
+      return d.data.value;
+    });
+
+    // nodes for the treemap rectangles
+    var nodes = svg
+      .selectAll("g")
+      .data(root.leaves())
+      .enter()
+      .append("g")
+      .attr("transform", function (d) {
+        return "translate(" + d.x0 + "," + (d.y0 + 25) + ")";
+      });
+
+    nodes
+      .append("rect")
+      .attr("width", function (d) {
+        return d.x1 - d.x0;
+      })
+      .attr("height", function (d) {
+        return d.y1 - d.y0;
+      })
+      .style("stroke", "black")
+      .style("fill", function (d) {
+        var colorScale = bloodTypeColors(d.parent.data.name);
+        var interpolationFactor =
+          (d.data.value - bloodTypeExtent[0]) /
+          (bloodTypeExtent[1] - bloodTypeExtent[0]);
+        return colorScale(interpolationFactor);
+      })
+      .on("mouseover", function () {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("transform", "scale(1.1) translate(-5,-5)");
+      })
+      .on("mouseout", function () {
+        d3.select(this)
+          .transition()
+          .duration(200)
+          .attr("transform", "scale(1) translate(0,0)");
+      });
+
+    nodes
+      .append("text")
+      .attr("class", "label")
+      .attr("x", 5)
+      .attr("y", 15)
+      .html(function (d) {
+        return `<tspan x="2" font-weight="bold">${d.data.name}</tspan><tspan x="2" dy="1.2em">${d.data.value} Cases</tspan>`;
+      })
+      .attr("font-size", "16px")
+      .style("pointer-events", "none")
+      .attr("fill", "black");
+
+    svg
+      .selectAll("titles")
+      .data(
+        root.descendants().filter(function (d) {
+          return d.depth == 1;
+        })
+      )
+      .enter()
+      .append("text")
+      .attr("x", function (d) {
+        return d.x0 + 10;
+      })
+      .attr("y", function (d) {
+        return d.y0 + 29;
+      })
+      .text(function (d) {
+        return d.data.name;
+      })
+      .attr("font-size", "19px")
+      .attr("font-weight", "bold")
+      .attr("fill", "black");
+  });
+  function returnHome() {
+    window.location.href = "index.html";
+  }
+</script>

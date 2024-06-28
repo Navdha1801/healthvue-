@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polar Area Chart with Tooltips, Highlighting, and Legend</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        #chart-container {
+            width: 600px;
+            height: 600px;
+            margin: 50px auto;
+            position: relative;
+          
+        }
+
+       
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+       
+        .legend {
+            position: absolute;
+            top: 80px;
+            left: 1250px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            margin-bottom: 5px;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        .home-button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+        }
+
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Relation between Disease and Billing Amount</h1>
+
+    <div id="chart-container"></div>
+    <div class="tooltip" id="tooltip"></div>
+    <div class="legend" id="legend"></div>
+    <div>
+        <button class="home-button" onclick="returnHome()">Return Home</button>
+    </div>
+    <script>
+        d3.csv("q7.csv").then(function (data) {
+            // Extracting medical condition and billing amount from CSV data
+            const medicalConditions = data.map(d => d["Medical Condition"]);
+            const billingAmounts = data.map(d => parseFloat(d["Average Billing Amount"].replace("$", "").replace(",", "")));
+
+            const width = 600;
+            const height = 600;
+            const radius = Math.min(width, height) / 2;
+
+            
+            const colorScale = d3.scaleOrdinal()
+                .range(["#01befe", "#ffdd00", "#ff7d00", "#ff006d", "#adff02", "#8f00ff"]);
+
+           
+            const svg = d3.select("#chart-container")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+          
+            const scale = d3.scaleLinear()
+                .domain([0, d3.max(billingAmounts)])
+                .range([0, radius]);
+
+            // Create arcs for the chart
+            const arc = d3.arc()
+                .innerRadius(25) 
+                .outerRadius(d => scale(d))
+                .startAngle((d, i) => (i * 2 * Math.PI) / billingAmounts.length)
+                .endAngle((d, i) => ((i + 1) * 2 * Math.PI) / billingAmounts.length);
+
+            // Append arcs to the SVG
+            const arcs = svg.selectAll("path")
+                .data(billingAmounts)
+                .enter()
+                .append("path")
+                .attr("d", arc)
+                .attr("fill", (d, i) => colorScale(i))
+                // Add tooltips and highlighting on hover
+                .on("mouseover", (event, d, i) => {
+                    const index = billingAmounts.indexOf(d);
+                    const medicalCondition = medicalConditions[index];
+
+                    // Highlight the hovered arc
+                    d3.select(event.currentTarget)
+                        .attr("stroke", "black")
+                        .attr("stroke-width", 2)
+                        .attr("opacity", 0.7);
+
+                    // Show tooltip
+                    const tooltip = d3.select("#tooltip");
+                    tooltip.style("opacity", 1);
+                    tooltip.html(`<strong>Medical Condition:</strong> ${medicalCondition}<br><strong>Billing Amount:</strong> $${d.toFixed(2)}`)
+                        .style("left", `${event.pageX}px`)
+                        .style("top", `${event.pageY}px`);
+                })
+                .on("mouseout", (event, d, i) => {
+                    // Remove highlighting from the arc
+                    d3.select(event.currentTarget)
+                        .attr("stroke", "none")
+                        .attr("opacity", 1);
+
+                    // Hide tooltip
+                    d3.select("#tooltip").style("opacity", 0);
+                });
+
+            // Create legend
+            const legend = d3.select("#legend");
+            const legendItems = legend.selectAll(".legend-item")
+                .data(medicalConditions)
+                .enter()
+                .append("div")
+                .attr("class", "legend-item");
+
+            legendItems.append("div")
+                .attr("class", "legend-color")
+                .style("background-color", (d, i) => colorScale(i));
+
+            legendItems.append("span")
+                .text(d => d);
+        });
+        function returnHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>

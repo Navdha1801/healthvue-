@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bar Graph with D3.js</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .axis-x text {
+      font-size: 14px;
+    }
+
+    .axis-y text {
+      font-size: 14px;
+    }
+
+    .disease-label {
+      font-size: 18px;
+      text-anchor: middle;
+      dominant-baseline: hanging;
+    }
+
+    .tooltip {
+      position: absolute;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .chart-box {
+      fill: none;
+      stroke: black;
+      stroke-width: 2px;
+    }
+
+    .button-container {
+      position: absolute;
+      top: 10%;
+      right: 10%;
+    }
+
+    .button {
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .home-button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      position: fixed;
+      bottom: 50px;
+      right: 50px;
+    }
+
+    .home-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="title">Relationship Between Medical Condition and Gender</h1>
+  <div class="tooltip"></div>
+  <div class="button-container">
+    <div>
+      <button class="button" onclick="redirect()">Relation with age</button>
+    </div>
+    <div>
+      <button class="button" onclick="direct()">Relation with gender</button>
+    </div>
+  </div>
+  <div>
+    <button class="home-button" onclick="returnHome()">Return Home</button>
+  </div>
+
+  <script>
+    // Data
+    const arthritisData = [
+      { Gender: 'Males', Number: 835 },
+      { Gender: 'Females', Number: 815 }
+    ];
+
+    const asthmaData = [
+      { Gender: 'Males', Number: 834 },
+      { Gender: 'Females', Number: 874 }
+    ];
+
+    const cancerData = [
+      { Gender: 'Males', Number: 816 },
+      { Gender: 'Females', Number: 887 }
+    ];
+
+    const diabetesData = [
+      { Gender: 'Males', Number: 798 },
+      { Gender: 'Females', Number: 825 }
+    ];
+
+    const hypertensionData = [
+      { Gender: 'Males', Number: 852 },
+      { Gender: 'Females', Number: 836 }
+    ];
+
+    const obesityData = [
+      { Gender: 'Males', Number: 790 },
+      { Gender: 'Females', Number: 838 }
+    ];
+
+ 
+    const width = 550;
+    const height = 200;
+    const margin = { top: 80, right: 0, bottom: 190, left: 250 };
+    const barWidth = (width - 200) / 3;
+
+   
+    const outerWidth = width * 1.5 + margin.left + margin.right - 200; 
+    const outerHeight = height * 2 + margin.top + margin.bottom;
+
+    // svg
+    const svg = d3.select('body')
+      .append('svg')
+      .attr('width', outerWidth)
+      .attr('height', outerHeight)
+      .append('g')
+      .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+    // Y scale (common for all diseases)
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max([...arthritisData, ...asthmaData, ...cancerData, ...diabetesData, ...hypertensionData, ...obesityData], d => d.Number)])
+      .range([height, 0]);
+
+    // Function to show tooltip
+    const showTooltip = (event, d) => {
+      const tooltip = d3.select('.tooltip');
+      tooltip.html(`<strong>${d.Gender}</strong>: ${d.Number}`)
+        .style('left', (event.pageX + 10) + 'px')
+        .style('top', (event.pageY - 30) + 'px')
+        .style('opacity', 1);
+    };
+
+    // Function to hide tooltip
+    const hideTooltip = () => {
+      d3.select('.tooltip').style('opacity', 0);
+    };
+
+    // add bars, axes, and labels for a disease
+    function addDiseaseGraph(data, xOffset, yOffset, label) {
+      // X scale
+      const xScale = d3.scaleBand()
+        .domain(data.map(d => d.Gender))
+        .range([xOffset, xOffset + barWidth])
+        .padding(0.3);
+
+      // X axis
+      svg.append('g')
+        .attr('transform', `translate(0, ${height + yOffset})`)
+        .call(d3.axisBottom(xScale));
+
+      // Y axis
+      svg.append('g')
+        .attr('transform', `translate(${xOffset}, ${yOffset})`)
+        .call(d3.axisLeft(yScale));
+
+      // Bars
+      svg.selectAll('.bar-' + label)
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'bar bar-' + label)
+        .attr('x', d => xScale(d.Gender))
+        .attr('y', d => yScale(d.Number) + yOffset)
+        .attr('width', xScale.bandwidth())
+        .attr('height', d => height - yScale(d.Number))
+        .on('mouseover', (event, d) => showTooltip(event, d))
+        .on('mouseout', hideTooltip);
+
+      // Disease label
+      svg.selectAll('.disease-label-' + label)
+        .data([data[0]]) 
+        .enter()
+        .append('text')
+        .attr('class', 'disease-label')
+        .attr('x', xOffset + barWidth / 2.5) 
+        .attr('y', margin.top / 100 + yOffset - 20) 
+        .text(label);
+    }
+
+    // Add graphs for each disease
+    addDiseaseGraph(arthritisData, 0, 0, 'Arthritis');
+    addDiseaseGraph(asthmaData, barWidth * 1.5, 0, 'Asthma');
+    addDiseaseGraph(cancerData, barWidth * 3, 0, 'Cancer');
+    addDiseaseGraph(diabetesData, 0, height + margin.top, 'Diabetes');
+    addDiseaseGraph(hypertensionData, barWidth * 1.5, height + margin.top, 'Hypertension');
+    addDiseaseGraph(obesityData, barWidth * 3, height + margin.top, 'Obesity');
+
+    // Add the outer rectangle to enclose all the charts
+    svg.append('rect')
+      .attr('class', 'chart-box')
+      .attr('x', -(margin.left - 100))
+      .attr('y', -(margin.top - 20))
+      .attr('width', outerWidth - 100)
+      .attr('height', outerHeight - 40);
+
+    svg.append('text')
+      .attr('class', 'label')
+      .attr('x', outerWidth / 2 - 400)
+      .attr('y', outerHeight - 80)
+      .text('Gender');
+
+    
+    svg.append('text')
+      .attr('class', 'label')
+      .attr('transform', `translate(${-margin.left + 80}, ${outerHeight / 2}) rotate(-90)`)
+      .text('Number of People Affected');
+
+   
+    function redirect() {
+      window.location.href = "q1.html"; 
+    }
+
+    function direct() {
+      window.location.href = "q1Graph2.html"; 
+    }
+    function returnHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+
+</html>

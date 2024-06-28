@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bar Graph</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      .bar {
+        fill: steelblue;
+      }
+
+      .bar:hover {
+        fill: orange;
+      }
+
+      .axis-x text {
+        font-size: 12px;
+      }
+
+      .axis-y text {
+        font-size: 12px;
+      }
+
+      .tooltip {
+        background-color: white;
+        border: 1px solid black;
+
+        padding: 5px;
+      }
+
+      .title {
+        font-size: 24px;
+        text-align: center;
+      }
+
+      .button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 16px;
+      }
+
+      .button:hover {
+        background-color: #45a049;
+      }
+
+      .home-button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 16px;
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+      }
+
+      .home-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1 class="title">Relationship Between Medical Condition and Age</h1>
+    <svg width="800" height="400"></svg>
+    <div id="buttons">
+      <button class="button" onclick="drawGraph()">Relation with age</button>
+      <button class="button" onclick="resetGraph()">
+        Relation with gender
+      </button>
+    </div>
+    <button class="home-button" onclick="returnHome()">Return Home</button>
+    <script>
+      let data = null; // Variable to store original data
+
+      // Loading data
+      d3.csv("q1.csv").then(function (d) {
+        data = d; // Store data in global variable
+        drawGraph();
+      });
+
+      function drawGraph() {
+        //svg
+        const margin = { top: 30, right: 30, bottom: 85, left: 100 };
+        const width = 800 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        const svg = d3
+          .select("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // X scale
+        const x = d3
+          .scaleBand()
+          .domain(data.map((d) => d["Medical Condition"]))
+          .range([0, width - 50])
+          .padding(0.1);
+
+        // Y scale
+        const y = d3
+          .scaleLinear()
+          .domain([0, d3.max(data, (d) => +d["Average Age"])])
+          .nice()
+          .range([height, 0]);
+
+        // X axis
+        svg
+          .append("g")
+          .attr("class", "axis-x")
+          .attr("transform", `translate(0,${height})`)
+          .call(d3.axisBottom(x))
+          .selectAll("text")
+          .style("text-anchor", "end")
+          .attr("dx", "1.5em")
+          .attr("dy", ".50em");
+
+        // X axis label
+        svg
+          .append("text")
+          .attr(
+            "transform",
+            `translate(${width / 2 - 40}, ${height + margin.bottom / 1.5})`
+          )
+          .style("text-anchor", "middle")
+          .text("Medical Condition");
+
+        // Y axis
+        svg.append("g").attr("class", "axis-y").call(d3.axisLeft(y));
+
+        // Y axis label
+        svg
+          .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 0 - margin.left + 30)
+          .attr("x", 0 - height / 2)
+          .attr("dy", "1em")
+          .style("text-anchor", "middle")
+          .text("Age Group Most Prone to Disease");
+
+        // Bars
+        svg
+          .selectAll(".bar")
+          .data(data)
+          .enter()
+          .append("rect")
+          .attr("class", "bar")
+          .attr("x", (d) => x(d["Medical Condition"]))
+          .attr("y", (d) => y(+d["Average Age"]))
+          .attr("width", x.bandwidth() - 20)
+          .attr("height", (d) => height - y(+d["Average Age"]))
+          .on("mouseover", function (event, d) {
+            // Show tooltip
+            d3.select(this).style("fill", "orange"); // Change color on hover
+            tooltip
+              .style("visibility", "visible")
+              .html(
+                `Medical Condition: ${d["Medical Condition"]}<br>age=${d["Average Age"]} years`
+              );
+          })
+          .on("mousemove", function (event) {
+            // Position tooltip
+            tooltip
+              .style("top", event.pageY - 10 + "px")
+              .style("left", event.pageX + 10 + "px");
+          })
+          .on("mouseout", function () {
+            // Hide tooltip
+            d3.select(this).style("fill", "steelblue"); // Revert color on mouseout
+            tooltip.style("visibility", "hidden");
+          });
+
+        // Tooltip
+        const tooltip = d3
+          .select("body")
+          .append("div")
+          .attr("class", "tooltip")
+          .style("position", "absolute")
+          .style("visibility", "hidden");
+      }
+
+      function resetGraph() {
+        window.location.href = "q1Graph2.html";
+      }
+      function returnHome() {
+        window.location.href = "index.html";
+      }
+
+      //showGraph();
+    </script>
+  </body>
+</html>

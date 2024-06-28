@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .axis text {
+            font: 15px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .cell {
+            stroke: #fff;
+        }
+
+        .cellhighlighted {
+            fill: yellow;
+        }
+
+        .line {
+            fill: none;
+            stroke: rgb(102, 74, 202);
+            stroke-width: 2px;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .button-container {
+            position: absolute;
+            top: 85%;
+            right: 80%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .button-container button {
+            margin-bottom: 10px;
+            border: 2px solid #ff5733;
+            background-color: #ff5733;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #ff8c66;
+            border-color: #ff8c66;
+        }
+
+        .home-button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            font-size: 16px;
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+        }
+
+        .home-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="color: purple;">Impact of Duration of Stay, Medication, and Insurance on Billing Amounts</h1>
+    <div class="button-container">
+        <button onclick="highlightLeastValuedRectangles()">Show Best insurance provider</button>
+        <button onclick="restoreOriginalHeatmap()">Show all insurance providers</button>
+    </div>
+    <div>
+        <button class="home-button" onclick="returnHome()">Return Home</button>
+    </div>
+
+    <svg id="legend" width="200" height="160" style="position: absolute; top: 180px; left: 630px;"></svg>
+    <script>
+        // Define margins and dimensions for the chart
+        var margin = { top: 40, right: 150, bottom: 50, left: 50 },
+            width = 650 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+        // Append an SVG element for the main chart
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + (margin.left + 90) + "," + margin.top + ")");
+
+        // Append an SVG element for the line chart
+        var lineSvg = d3.select("body")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + (margin.left + 120) + "," + margin.top + ")");
+
+        // Append a tooltip div for showing details on hover
+        var tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        // Load CSV data and process it
+        d3.csv("q3.csv", function (d) {
+            // Convert string values to numbers and structure the data
+            return {
+                Medication: d.Medication,
+                "Insurance Provider": d["Insurance Provider"],
+                "Duration of Stay": +d["Duration of Stay"],
+                "Billing Amount": +d["Billing Amount"]
+            };
+        }).then(function (data) {
+            // After loading and processing data, define event listeners inside 'then' block
+
+            // Event listener for the first button to highlight least valued rectangles
+            document.querySelector('button').addEventListener('click', function () {
+                highlightLeastValuedRectangles();
+            });
+
+            // Event listener for the second button to restore original heatmap
+            document.querySelector('button:nth-of-type(2)').addEventListener('click', function () {
+                restoreOriginalHeatmap();
+            });
+
+            // Log the loaded data to the console
+            console.log("Data:", data);
+
+            // Calculate average billing amount for each combination of Medication and Insurance Provider
+            var averageBillingAmounts = d3.rollup(
+                data,
+                v => d3.mean(v, d => d["Billing Amount"]), // Calculate the average billing amount for each combination
+                d => d.Medication + "-" + d["Insurance Provider"] // Group data by Medication and Insurance Provider
+            );
+
+            // Convert the rollup object to an array for easier access
+            var averageBillingArray = Array.from(averageBillingAmounts, ([key, value]) => ({ key, value }));
+
+            // Log the array of average billing amounts to the console
+            console.log("Average Billing Amounts:", averageBillingArray);
+
+            // Define the x-scale for the chart
+            var xScale = d3.scaleBand()
+                .domain(data.map(function (d) { return d.Medication; })) // Set the domain to the unique Medication values
+                .range([0, width]) // Set the range to fit within the width of the chart
+                .padding(0.1); // Add padding between bars
+
+            // Define the y-scale for the chart
+            var yScale = d3.scaleBand()
+                .domain(data.map(function (d) { return d["Insurance Provider"]; })) // Set the domain to the unique Insurance Provider values
+                .range([height, 0]) // Set the range to fit within the height of the chart
+                .padding(0.1); // Add padding between bars
+
+            // Function to highlight the least valued rectangles in each column
+            function highlightLeastValuedRectangles() {
+                // Iterate over each column (Medication)
+                xScale.domain().forEach(function (column) {
+                    // Filter data for the current column (Medication)
+                    var columnData = averageBillingArray.filter(function (d) { return d.key.split("-")[0] === column; });
+                    // Find the least valued rectangle in the column
+                    var leastValuedRect = d3.min(columnData, function (d) { return d.value; });
+
+                    // Highlight the least valued rectangle and make others transparent
+                    svg.selectAll(".cell")
+                        .filter(function (d) { return d.key.split("-")[0] === column && d.value === leastValuedRect; })
+                        .attr("class", "cellhighlighted") // Add class to highlight
+                        .style("opacity", 1); // Set opacity to fully visible
+
+                    // Make other rectangles transparent
+                    svg.selectAll(".cell")
+                        .filter(function (d) { return d.key.split("-")[0] === column && d.value !== leastValuedRect; })
+                        .attr("class", "cell") // Reset class
+                        .style("opacity", 0.05); // Set opacity to low
+                });
+            }
+
+            // Define x-scale for the line chart
+            var lineXScale = d3.scaleLinear()
+                .domain([0, d3.max(data, function (d) { return d["Duration of Stay"]; })]) // Set the domain to the range of "Duration of Stay" values
+                .range([0, width]); // Set the range to fit within the width of the chart
+
+            // Define y-scale for the line chart
+            var lineYScale = d3.scaleLinear()
+                .domain([0, d3.max(data, function (d) { return d["Billing Amount"]; })]) // Set the domain to the range of "Billing Amount" values
+                .range([height, 0]); // Set the range to fit within the height of the chart
+
+            // Define color scale for heatmap
+            var colorScale = d3.scaleLinear()
+                .domain([d3.min(averageBillingArray, d => d.value), d3.max(averageBillingArray, d => d.value)]) // Set the domain to the range of average billing amounts
+                .range(["lightblue", "darkblue"]); // Set the range of colors for heatmap
+
+            // Function to restore the original heatmap
+            function restoreOriginalHeatmap() {
+                // Reset the fill color and opacity of all rectangles
+                svg.selectAll(".cell")
+                    .attr("class", "cell") // Reset class
+                    .style("fill", function (d) { return colorScale(d.value); }) // Set fill color based on original data
+                    .style("opacity", 1); // Reset opacity to fully visible
+            }
+
+            // Append rectangles for each data point to create the heatmap
+            svg.selectAll(".cell")
+                .data(averageBillingArray)
+                .enter().append("rect")
+                .attr("class", "cell") // Add class for styling
+                .attr("x", function (d) { return xScale(d.key.split("-")[0]); }) // Set x-coordinate using xScale
+                .attr("y", function (d) { return yScale(d.key.split("-")[1]); }) // Set y-coordinate using yScale
+                .attr("width", xScale.bandwidth()) // Set width of each rectangle based on bandwidth of xScale
+                .attr("height", yScale.bandwidth()) // Set height of each rectangle based on bandwidth of yScale
+                .style("fill", function (d) { return colorScale(d.value); }) // Set fill color based on average billing amount
+                .on("mouseover", handleMouseOver); // Add mouseover event listener
+
+            // Define x-axis
+            var xAxis = d3.axisBottom(xScale);
+
+            // Define y-axis
+            var yAxis = d3.axisLeft(yScale);
+
+            // Append x-axis to the chart
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")") // Position x-axis at the bottom of the chart
+                .call(xAxis) // Call the xAxis function to render the axis
+                .append("text")
+                .attr("x", width / 2) // Position the text at the center of the x-axis
+                .attr("y", 40) // Position the text slightly above the x-axis
+                .attr("fill", "#000") // Set the color of the text
+                .style("text-anchor", "middle") // Center align the text
+                .text("Medication"); // Set the text content for the x-axis label
+
+
+            // Append y-axis for the heatmap graph
+            svg.append("g")
+                .attr("class", "y axis") // Add class for styling
+                .call(yAxis) // Call the yAxis function to render the axis
+                .append("text")
+                .attr("transform", "rotate(-90)") // Rotate the text to be vertical
+                .attr("y", -125) // Position the text along the y-axis
+                .attr("x", -height / 2) // Position the text slightly to the left of the y-axis
+                .attr("fill", "#000") // Set the color of the text
+                .attr("dy", ".71em") // Adjust the vertical position of the text
+                .style("text-anchor", "middle") // Center align the text
+                .text("Insurance Provider"); // Set the text content for the y-axis label
+
+            // Define the line function for the line graph
+            var line = d3.line()
+                .x(function (d) { return lineXScale(d.Duration); }) // Set x-coordinate using lineXScale
+                .y(function (d) { return lineYScale(d.Amount); }); // Set y-coordinate using lineYScale
+
+            // Function to draw the line graph
+            function drawLineGraph(lineData) {
+                lineSvg.selectAll("*").remove(); // Clear previous line graph
+                if (lineData.length === 0) return; // If no data, exit
+
+                // Define the tooltip div
+                var tooltip = d3.select("body").append("div")
+                    .attr("class", "tooltip")
+                    .style("opacity", 0);
+
+                // Append path element for the line
+                lineSvg.append("path")
+                    .datum(lineData)
+                    .attr("class", "line") // Add class for styling
+                    .attr("d", line); // Set the path data using the line function
+
+                // Define handleMouseOverLine function for the line chart
+                function handleMouseOverLine(event, d) {
+                    tooltip.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    tooltip.html("Duration: " + d.Duration + " days<br/>Billing Amount: $" + d.Amount)
+                        .style("left", (event.pageX) + "px")
+                        .style("top", (event.pageY - 28) + "px");
+                }
+
+                // Add event listeners to the line path
+                lineSvg.selectAll(".line")
+                    .on("mouseover", function (event, d) {
+                        var mouseCoords = d3.pointer(event); // Get mouse coordinates
+                        var nearestDataPoint = findNearestDataPoint(mouseCoords[0], lineData); // Find nearest data point
+                        handleMouseOverLine(event, nearestDataPoint); // Pass data to tooltip handler
+                    })
+                    .on("mouseout", function (d) {
+                        tooltip.transition()
+                            .duration(500)
+                            .style("opacity", 0);
+                    });
+
+                // Function to find the nearest data point to the mouse coordinates
+                function findNearestDataPoint(xCoord, data) {
+                    // Find the data point nearest to the x-coordinate
+                    var nearestPoint = data.reduce(function (nearest, current) {
+                        var currentX = lineXScale(current.Duration);
+                        var nearestX = lineXScale(nearest.Duration);
+                        return Math.abs(currentX - xCoord) < Math.abs(nearestX - xCoord) ? current : nearest;
+                    });
+                    return nearestPoint;
+                }
+
+                // Append x-axis for the line graph
+                lineSvg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(d3.axisBottom(lineXScale)) // Call the axis function to render the x-axis
+                    .append("text")
+                    .attr("x", width / 2) // Position the text at the center of the x-axis
+                    .attr("y", 40) // Position the text slightly above the x-axis
+                    .attr("fill", "#000") // Set the color of the text
+                    .style("text-anchor", "middle") // Center align the text
+                    .text("Duration of Stay(in days)"); // Set the text content for the x-axis label
+
+                // Append y-axis for the line graph
+                lineSvg.append("g")
+                    .attr("class", "y axis") // Add class for styling
+                    .call(d3.axisLeft(lineYScale)) // Call the axis function to render the y-axis
+                    .append("text")
+                    .attr("transform", "rotate(-90)") // Rotate the text to be vertical
+                    .attr("y", -100) // Position the text along the y-axis
+                    .attr("x", -height / 2) // Position the text slightly to the left of the y-axis
+                    .attr("fill", "#000") // Set the color of the text
+                    .attr("dy", ".71em") // Adjust the vertical position of the text
+                    .style("text-anchor", "middle") // Center align the text
+                    .text("Billing Amount(in $)"); // Set the text content for the y-axis label
+            }
+
+            // Function to handle mouseover event on heatmap cells
+            function handleMouseOver(event, d) {
+                // Transition for tooltip
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+
+                // Set tooltip content
+                tooltip.html("<strong>Medication:</strong> " + d.key.split("-")[0] + "<br/>" +
+                    "<strong>Insurance Provider:</strong> " + d.key.split("-")[1] + "<br/>" +
+                    "<strong>Average Billing Amount:</strong> $" + d3.format(".2f")(d.value))
+
+                    .style("left", (event.pageX + 10) + "px") // Position tooltip slightly to the right of cursor
+                    .style("top", (event.pageY - 20) + "px"); // Position tooltip slightly above cursor
+
+                // If no data point is hovered
+                if (!d) {
+                    //drawLineGraph([]); // Clear the line graph
+                    return; // Exit the function
+                }
+            }
+
+            // Function to handle click event on heatmap cells
+            function handleClick(event, d) {
+                // Filter data for the clicked cell
+                var filteredData = data.filter(function (point) {
+                    return point.Medication === d.key.split("-")[0] && point["Insurance Provider"] === d.key.split("-")[1];
+                });
+
+                // Prepare data for line graph
+                var lineData = filteredData.map(function (point) {
+                    return { Duration: point["Duration of Stay"], Amount: point["Billing Amount"] };
+                });
+
+                // Draw line graph with the filtered data
+                drawLineGraph(lineData);
+            }
+
+            // Add click event listener to heatmap cells
+            svg.selectAll(".cell")
+                .on("click", function (event, d) {
+                    handleClick(event, d);
+                });
+
+            // Track mouse movements to update hover state
+            svg.on("mousemove", function () {
+                tooltip.style("left", (event.pageX + 10) + "px") // Position tooltip slightly to the right of cursor
+                    .style("top", (event.pageY - 20) + "px"); // Position tooltip slightly above cursor
+            }).on("mouseleave", function () {
+                //drawLineGraph([]); // Clear the line graph
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0); // Fade out the tooltip on mouse leave
+            });
+
+            // Create a legend
+            var legend = d3.select("#legend");
+
+            // Append defs element for gradient
+            var defs = legend.append("defs");
+
+            // Append linearGradient element for legend
+            var linearGradient = defs.append("linearGradient")
+                .attr("id", "legendGradient")
+                .attr("x1", "0%")
+                .attr("y1", "0%")
+                .attr("x2", "0%")
+                .attr("y2", "100%");
+
+            // Define color stops for the gradient
+            var colorStops = colorScale.ticks(5).map(function (value) {
+                return {
+                    offset: (value - d3.min(averageBillingArray, d => d.value)) / (d3.max(averageBillingArray, d => d.value) - d3.min(averageBillingArray, d => d.value)),
+                    color: colorScale(value)
+                };
+            });
+
+            // Append stop elements to the linearGradient element
+            linearGradient.selectAll("stop")
+                .data(colorStops)
+                .enter().append("stop")
+                .attr("offset", d => d.offset * 100 + "%")
+                .attr("stop-color", d => d.color);
+
+            // Append a rectangle for the legend
+            legend.append("rect")
+                .attr("width", 20)
+                .attr("height", 150)
+                .style("fill", "url(#legendGradient)"); // Apply the linear gradient to the rectangle
+
+            // Define legend scale
+            var legendScale = d3.scaleLinear()
+                .domain([d3.min(averageBillingArray, d => `${d.value}`), d3.max(averageBillingArray, d => d.value)])
+                .range([0, 150]); // Set range for legend
+
+            // Define legend axis
+            var legendAxis = d3.axisRight(legendScale).ticks(5)
+                .tickFormat(d3.format("$,.0f"));;
+
+            // Append legend axis to the legend
+            legend.append("g")
+                .attr("transform", "translate(20,0)")
+                .call(legendAxis); // Call legendAxis function to render the axis
+        });
+        function returnHome() {
+            window.location.href = "index.html";
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trends in Medication Usage Over Time</title>
+    <style>
+      #selectButton {
+        background-color: #3498db;
+        color: #fff;
+        border: 1px solid #3498db;
+        padding: 5px 8px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .tooltip {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        pointer-events: none;
+      }
+
+      .home-button {
+        padding: 10px 20px;
+        margin: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 16px;
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+      }
+
+      .home-button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Variation of Usage of Medications over Time</h1>
+  </body>
+  <meta charset="utf-8" />
+
+  <script src="https://d3js.org/d3.v7.js"></script>
+
+  <select id="selectButton">
+    <option value="" disabled selected>Choose an option</option>
+  </select>
+
+  <div id="my_dataviz"></div>
+  <div>
+    <button class="home-button" onclick="returnHome()">Return Home</button>
+  </div>
+  <script>
+    const margin = { top: 10, right: 30, bottom: 60, left: 100 },
+      width = 800 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
+
+    // svg
+    const svg = d3
+      .select("#my_dataviz")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    //Reading data
+    d3.csv("q8.csv").then(function (data) {
+      var tooltip = d3
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+      const allGroup = new Set(data.map((d) => d.Medication));
+
+      d3.select("#selectButton")
+        .selectAll("myOptions")
+        .data(allGroup)
+        .enter()
+        .append("option")
+        .text(function (d) {
+          return d;
+        })
+        .attr("value", function (d) {
+          return d;
+        })
+        .property("selected", function (d) {
+          return d === "Aspirin";
+        });
+
+      const myColor = d3
+        .scaleOrdinal()
+        .range([
+          "#01befe",
+          "#ffdd00",
+          "#ff7d00",
+          "#ff006d",
+          "#adff02",
+          "#8f00ff",
+        ]);
+
+      // Add X axis --> it is a date format
+      const x = d3
+        .scaleLinear()
+        .domain(
+          d3.extent(data, function (d) {
+            return d.Month;
+          })
+        )
+        .range([0, width]);
+      svg
+        .append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(x).ticks(7));
+
+      svg
+        .append("text")
+        .attr(
+          "transform",
+          `translate(${width / 2 - 40}, ${height + margin.bottom / 1.5})`
+        )
+        .style("text-anchor", "middle")
+        .text("Month of the Year");
+
+      // Add Y axis
+      const y = d3
+        .scaleLinear()
+        .domain([
+          130,
+          d3.max(data, function (d) {
+            return +d.Count;
+          }),
+        ])
+        .range([height, 0]);
+      svg.append("g").call(d3.axisLeft(y));
+
+      // Y axis label
+      svg
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 30)
+        .attr("x", 0 - height / 2)
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Number of Usages");
+
+      const line = svg
+        .append("g")
+        .append("path")
+        .datum(
+          data.filter(function (d) {
+            return d.Medication == "Aspirin";
+          })
+        )
+        .attr(
+          "d",
+          d3
+            .line()
+            .x(function (d) {
+              return x(d.Month);
+            })
+            .y(function (d) {
+              return y(+d.Count);
+            })
+        )
+        .attr("stroke", function (d) {
+          return myColor("valueA");
+        })
+        .style("stroke-width", 2)
+        .style("fill", "none");
+
+      // A function that updates the chart
+      function update(selectedGroup) {
+        // Create new data with the selection?
+        const dataFilter = data.filter(function (d) {
+          return d.Medication == selectedGroup;
+        });
+
+        // Give these new data to update line
+        line
+          .datum(dataFilter)
+          .transition()
+          .duration(1000)
+          .attr(
+            "d",
+            d3
+              .line()
+              .x(function (d) {
+                return x(d.Month);
+              })
+              .y(function (d) {
+                return y(+d.Count);
+              })
+          )
+          .attr("stroke", function (d) {
+            return myColor(selectedGroup);
+          });
+
+        svg.selectAll("circle").remove();
+        svg
+          .selectAll("circle")
+          .data(dataFilter)
+          .enter()
+          .append("circle")
+          .attr("cx", function (d) {
+            return x(d.Month);
+          })
+          .attr("cy", function (d) {
+            return y(d.Count);
+          })
+          .attr("r", 5)
+          .style("fill", "steelblue")
+
+          .on("mouseover", function (event, d) {
+            var mouseCoords = d3.pointer(event);
+            handleMouseOverCircle(event, d);
+          })
+          .on("mouseout", function (d) {
+            tooltip.transition().duration(500).style("opacity", 0);
+          })
+          .transition()
+          .duration(1000);
+
+        function handleMouseOverCircle(event, d) {
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip
+            .html(`Month: ${d.Month}<br/>Usage Count: ${d.Count}`)
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY - 28 + "px");
+        }
+
+        // Add event listeners to the line path
+        line
+          .on("mouseover", function (event, d) {
+            var mouseCoords = d3.pointer(event);
+            var nearestDataPoint = findNearestDataPoint(
+              mouseCoords[0],
+              data,
+              selectedGroup
+            );
+            handleMouseOverLine(event, nearestDataPoint);
+          })
+          .on("mouseout", function (d) {
+            tooltip.transition().duration(500).style("opacity", 0);
+          });
+      }
+
+      d3.select("#selectButton").on("change", function (event, d) {
+        const selectedOption = d3.select(this).property("value");
+
+        update(selectedOption);
+      });
+
+      function findNearestDataPoint(xCoord, data, selectedGroup) {
+        const groupData = data.filter((d) => d.Medication === selectedGroup);
+
+        var nearestPoint = groupData.reduce(function (nearest, current) {
+          var currentX = x(current.Month);
+          var nearestX = x(nearest.Month);
+          return Math.abs(currentX - xCoord) < Math.abs(nearestX - xCoord)
+            ? current
+            : nearest;
+        });
+        return nearestPoint;
+      }
+      update("Aspirin");
+    });
+    function returnHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</html>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Duration of Stay for Diseases</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<style>
+  /*These are CSS Styles for various elements rgb(196, 166, 196);*/
+  /* body {
+  background: linear-gradient(to bottom right, rgb(241, 205, 241), rgb(187, 222, 251));
+} */
+
+  /*Styling for the links in the dendogram*/
+
+  .home-button {
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+
+  .home-button:hover {
+    background-color: #45a049;
+  }
+
+  .link {
+    fill: none;
+    stroke: blue;
+    stroke-width: 1px;
+  }
+
+  /*Styling for the filter buttons*/
+  .button-container {
+    position: absolute;
+    top: 130px;
+    right: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .button-container button {
+    margin-bottom: 10px;
+    border: 2px solid #4a90e2;
+    background-color: #2f80ed;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .button-container button:hover {
+    background-color: #1e70d1;
+    border-color: #1e70d1;
+  }
+
+  /*Styling for the headings*/
+  h2,
+  .heading {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    color: black;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  /*Styling for the tooltips*/
+  .tooltip {
+    position: absolute;
+    text-align: center;
+    width: auto;
+    padding: 8px;
+    font: 13px sans-serif;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 2000;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+<body>
+  <div>
+    <button class="home-button" onclick="returnHome()">Return Home</button>
+  </div>
+  <h2>Average Duration of Stay for Different Medications Across Diseases</h2>
+  <svg id="dendrogram-svg" width="1200" height="700"></svg>
+  <svg id="legend-svg" width="4000" height="4000"></svg>
+  <!-- Creates the SVG element for the Dendogram. -->
+  <div class="button-container">
+    <!-- Buttons to filter data -->
+    <button onclick="showAllStats()">Show all Stats</button>
+    <button onclick="showBestMedication()">Show Best Medication</button>
+    <button onclick="showWorstMedication()">Show Worst Medication</button>
+  </div>
+  <script>
+    const height = 600;
+    const width = 700;
+    root = 0;
+    const margin = { top: 100, right: 500, bottom: 50, left: 100 };
+
+    // Select the SVG element with the id "dendrogram-svg"
+    const dendrogramSvg = d3
+      .select("#dendrogram-svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .style("left", `100px`)
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    const legendSvg = d3
+      .select("#legend-svg")
+      .append("svg")
+      .attr("id", "legend-svg")
+      .attr("width", 2000)
+      .attr("height", 2000)
+      .style("position", "absolute")
+      .style("left", `1240px`)
+      .style("top", `0px`);
+
+    //Function to create the graph to show all statistics
+    function creategraph(data1) {
+      // Extract unique medical conditions from the data
+      const medicalConditions = Array.from(
+        new Set(data1.map((d) => d["Medical Condition"]))
+      );
+
+      // Create a scale for y-axis based on medical conditions
+      const yScale = d3
+        .scaleBand()
+        .domain(medicalConditions)
+        .range([0, height])
+        .padding(0.1);
+
+      // Create a scale for x-axis based on duration of stay
+      const xScale = d3
+        .scaleLinear()
+        .domain([0, d3.max(data1, (d) => d.Duration)])
+        .range([0, width / 2]);
+
+      // Create a dendrogram layout
+      const dendrogram = d3.cluster().size([height, width - 200]);
+
+      // Initialize root node
+      root = { id: "Disease", children: [] };
+
+      // Prepare data for dendrogram
+      let index = 0;
+      medicalConditions.forEach((condition) => {
+        // Iterate through each medical condition
+        const conditionData = data1.filter(
+          // Filter data based on the current medical condition
+          (d) => d["Medical Condition"] === condition
+        );
+        root.children.push({
+          // Push data related to the current medical condition to root.children array
+          id: condition, // Assign the id of the current medical condition
+          children: conditionData.map((d) => ({
+            // Map each data item to an object
+            id: d.Medication, // Assign the id of the medication
+            duration: d.Duration, // Assign the duration of the medication
+            data: d, // Assign the entire data object
+            unique: index++, // Assign a unique index (incremented)
+          })),
+        });
+      });
+
+      const stratifyData = d3.hierarchy(root); // Create hierarchical data structure using d3.hierarchy
+
+      const links = dendrogram(stratifyData).links(); // Generate links for dendrogram layout
+
+      dendrogramSvg // Append paths for links in the dendrogram
+        .selectAll(".link")
+        .data(links)
+        .enter()
+        .append("path")
+        .attr("class", "link")
+        .attr(
+          "d",
+          d3
+            .linkVertical() // Create a vertical link generator
+            .x((d) => d.y) // Set the x-coordinate of the link
+            .y((d) => d.x) // Set the y-coordinate of the link
+        );
+
+      const nodes = dendrogramSvg // Append groups for nodes in the dendrogram
+        .selectAll(".node")
+        .data(stratifyData.descendants())
+        .enter()
+        .append("g")
+        .attr("class", "node")
+        .attr("transform", (d) => `translate(${d.y},${d.x})`);
+
+      nodes.append("circle").attr("r", 4); // Append circles for nodes
+
+      nodes // Append text labels for nodes
+        .append("text")
+        .attr("class", "node-label")
+        .attr("dy", "0.31em")
+        .attr("dx", (d) => (d.children ? -7 : 7))
+        .attr("text-anchor", (d) => (d.children ? "end" : "start")) // Set the text anchor based on whether the node has children
+        .text((d) => d.data.id); // Set the text content of the labels based on the node data
+
+      dendrogramSvg //Heading
+        .append("text")
+        .attr("class", "heading")
+        .attr("x", margin.left + 377)
+        .attr("y", margin.top - 120)
+        .style("fill", "black")
+        .style("font-size", "17px")
+        .text("Medication");
+
+      dendrogramSvg //Heading
+        .append("text")
+        .attr("class", "heading")
+        .attr("x", margin.left + 540)
+        .attr("y", margin.top - 120)
+        .style("fill", "black")
+        .style("font-size", "17px")
+        .text("Average Duration of Stay");
+
+      const colorScale = d3 //Gradient color scale for the bars for the duration range
+        .scaleSequential()
+        .domain([0, d3.max(data1, (d) => d.Duration)])
+        .interpolator(d3.interpolateBlues);
+
+      const tooltip = d3 //Tooltips to show on hover
+        .select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+      // Iterate over each node in the dendrogram to show bars
+      nodes.each(function (d, i) {
+        if (!d.children) {
+          // Check if the node has no children (i.e., it's a leaf node)
+
+          const nodeGroup = d3.select(this); // Select the current node's group element
+
+          const barSvg = nodeGroup // Append an SVG element to the current node's group
+            .append("svg")
+            .attr("class", "bars-svg")
+            .attr("width", width)
+            .attr("height", yScale.bandwidth())
+            .attr("x", 100)
+            .attr("y", -yScale.bandwidth() / 2 + 35);
+
+          const bar = barSvg // Append a rectangle for the duration bar
+            .append("rect")
+            .attr("class", "duration-bar")
+            .attr("width", xScale(d.data.duration)) // Set the width of the rectangle based on the duration
+            .attr("height", 15)
+            .attr("stroke", "black")
+            .attr("fill", colorScale(d.data.duration)); // Set the fill color of the rectangle based on the duration
+
+          const text = barSvg //Append text for the duration
+            .append("text")
+            .attr("x", xScale(d.data.duration) + 5)
+            .attr("y", 13)
+            .text(d.data.duration + " days");
+
+          bar // Set up event listeners for mouseover and mouseout events on the bar
+            .on("mouseover", function (event, d) {
+              tooltip.transition().duration(200).style("opacity", 0.9); // Show the tooltip on mouseover
+              tooltip
+                .html(
+                  `<strong>Disease:</strong> ${d.parent.data.id}<br><strong>Medicine:</strong> ${d.data.id}<br><strong>Avg Duration:</strong> ${d.data.duration} days`
+                )
+                .style("left", event.pageX + "px")
+                .style("top", event.pageY - 28 + "px");
+            })
+            .on("mouseout", function (d) {
+              tooltip.transition().duration(500).style("opacity", 0); // Hide the tooltip on mouseout
+            });
+        }
+      });
+    }
+
+    //Function to create the legend
+    const createLegend = () => {
+      d3.json("q5.json").then(function (data) {
+        // Load JSON data
+        // Extract maximum duration from the JSON data
+        const maxDuration = d3.max(data, (d) => d.Duration);
+
+        const colorScale = d3
+          .scaleSequential()
+          .interpolator(d3.interpolateBlues)
+          .domain([0, maxDuration]); // Set the domain based on the maximum duration
+
+        const legendWidth = 370;
+        const legendHeight = 30;
+        const numBoxes = 5;
+
+        const legend = legendSvg
+          .append("g")
+          .attr("class", "legend")
+          .attr("transform", `translate(50, 10)`);
+
+        // Add boxes representing the color gradient
+        for (let i = 0; i < numBoxes; i++) {
+          legend
+            .append("rect")
+            .attr("x", (i / numBoxes) * legendWidth)
+            .attr("y", 0)
+            .attr("width", legendWidth / numBoxes)
+            .attr("height", legendHeight)
+            .style("fill", colorScale((i / (numBoxes - 1)) * maxDuration));
+        }
+
+        const legendScale = d3
+          .scaleLinear()
+          .range([0, legendWidth])
+          .domain([0, maxDuration]);
+
+        const legendAxis = d3
+          .axisBottom(legendScale)
+          .ticks(5)
+          .tickFormat((d) => `${d} days`);
+
+        legend
+          .append("g")
+          .attr("transform", `translate(0, ${legendHeight})`)
+          .call(legendAxis);
+      });
+    };
+
+    // Function to update the graph with filtered data by fading out the irrelevant bars
+    function updateVisualizationWithFilteredData(filteredData) {
+      const filteredUniqueIds = filteredData.map((d) => d.unique); // Extract unique identifiers from filtered data
+
+      dendrogramSvg
+        .selectAll(".node") // Select all duration bars associated with nodes
+        .selectAll(".duration-bar")
+        .filter(function (d) {
+          //filter out those not in filtered data
+          return !filteredUniqueIds.includes(d.data.unique);
+        })
+        .transition()
+        .duration(500)
+        .style("opacity", 0.1); //apply transition to adjust opacity
+
+      setTimeout(() => {
+        // Set timeout to update the visualization with the filtered data after a delay
+        creategraph(filteredData); //Data flows from this function to the creategraph function so the graph gets created
+      }, 500);
+    }
+
+    //On clicking the button, function to show all statistics
+    function showAllStats() {
+      dendrogramSvg // Transition to reset opacity of all duration bars to 1
+        .selectAll(".node")
+        .selectAll(".duration-bar")
+        .transition()
+        .duration(500)
+        .style("opacity", 1);
+
+      d3.json("q5.json").then(function (data) {
+        // Load data and create graph
+        creategraph(data); // Data flows from this function to "creategraph" function so the graph gets created
+      });
+    }
+
+    //On clicking the button, function to show the best medication(shortest duration of stay)
+    function showBestMedication() {
+      showAllStats(); // Call function to show all statistics
+
+      // Load JSON data from the file asynchronously and process it when loaded
+      d3.json("q5.json").then(function (data) {
+        // Initialize an empty array to store filtered data
+        const filteredData = [];
+
+        // Extract unique medical conditions from the loaded data
+        const medicalConditions = Array.from(
+          new Set(data.map((d) => d["Medical Condition"]))
+        );
+
+        // Iterate over each medical condition
+        medicalConditions.forEach((condition) => {
+          // Filter data for the current medical condition
+          const conditionData = data.filter(
+            (d) => d["Medical Condition"] === condition
+          );
+
+          // Find the shortest duration among medications for the current condition
+          const shortestDuration = d3.min(conditionData, (d) => d.Duration);
+
+          // Find the medication with the shortest duration
+          const bestMedication = conditionData.find(
+            (d) => d.Duration === shortestDuration
+          );
+
+          // If a medication with the shortest duration is found
+          if (bestMedication) {
+            // Find the corresponding node in the root for the current medical condition
+            const conditionNode = root.children.find(
+              (child) => child.id === condition
+            );
+
+            // If the condition node and its children exist
+            if (conditionNode && conditionNode.children) {
+              // Find the corresponding node for the best medication
+              const medicationNode = conditionNode.children.find(
+                (child) => child.id === bestMedication.Medication
+              );
+
+              // If the medication node is found
+              if (medicationNode) {
+                // Add the best medication data to the filtered data array, along with a unique identifier
+                filteredData.push({
+                  ...bestMedication,
+                  unique: medicationNode.unique,
+                });
+              }
+            }
+          }
+        });
+
+        // Update the visualization with the filtered data
+        updateVisualizationWithFilteredData(filteredData); // Data flows from this function to the update function so the graph gets updated
+      });
+    }
+
+    // On clicking the button, Function to show the worst medication(longest duration of stay)
+    function showWorstMedication() {
+      // Call function to show all statistics
+      showAllStats();
+
+      // Load JSON data from the file  asynchronously and process it when loaded
+      d3.json("q5.json").then(function (data) {
+        // Initialize an empty array to store filtered data
+        const filteredData = [];
+
+        // Extract unique medical conditions from the loaded data
+        const medicalConditions = Array.from(
+          new Set(data.map((d) => d["Medical Condition"]))
+        );
+
+        // Iterate over each medical condition
+        medicalConditions.forEach((condition) => {
+          // Filter data for the current medical condition
+          const conditionData = data.filter(
+            (d) => d["Medical Condition"] === condition
+          );
+
+          // Find the longest duration among medications for the current condition
+          const longestDuration = d3.max(conditionData, (d) => d.Duration);
+
+          // Find the medication with the longest duration
+          const worstMedication = conditionData.find(
+            (d) => d.Duration === longestDuration
+          );
+
+          // If a medication with the longest duration is found
+          if (worstMedication) {
+            // Find the corresponding node in the root for the current medical condition
+            const conditionNode = root.children.find(
+              (child) => child.id === condition
+            );
+
+            // If the condition node and its children exist
+            if (conditionNode && conditionNode.children) {
+              // Find the corresponding node for the worst medication
+              const medicationNode = conditionNode.children.find(
+                (child) => child.id === worstMedication.Medication
+              );
+
+              // If the medication node is found
+              if (medicationNode) {
+                // Add the worst medication data to the filtered data array, along with a unique identifier
+                filteredData.push({
+                  ...worstMedication,
+                  unique: medicationNode.unique,
+                });
+              }
+            }
+          }
+        });
+
+        // Update the visualization with the filtered data
+        updateVisualizationWithFilteredData(filteredData); // Data flows from this function to the update function so the graph gets created
+      });
+    }
+
+    // Show all statistics initially
+    showAllStats();
+    createLegend();
+    function returnHome() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+
+</html>

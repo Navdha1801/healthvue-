@@ -1,0 +1,751 @@
+Medication,Insurance Provider,Duration of Stay,Billing Amount
+Aspirin,Aetna,1,20700.896710234392
+Aspirin,Aetna,2,21465.208820842363
+Aspirin,Aetna,3,29955.95652370744
+Aspirin,Aetna,4,27446.344074064215
+Aspirin,Aetna,5,25015.897152873917
+Aspirin,Aetna,6,20973.431605148886
+Aspirin,Aetna,7,29235.16332388227
+Aspirin,Aetna,8,25024.798567348153
+Aspirin,Aetna,9,27096.855354686337
+Aspirin,Aetna,10,32507.637730782742
+Aspirin,Aetna,11,30034.606695358492
+Aspirin,Aetna,12,23764.058994545365
+Aspirin,Aetna,13,21312.792197792904
+Aspirin,Aetna,14,25113.229123558172
+Aspirin,Aetna,15,21248.55362301482
+Aspirin,Aetna,16,24853.465503311403
+Aspirin,Aetna,17,22025.441231827666
+Aspirin,Aetna,18,26223.71290021972
+Aspirin,Aetna,19,27150.3878903341
+Aspirin,Aetna,20,29744.91935121462
+Aspirin,Aetna,21,22287.63318034001
+Aspirin,Aetna,22,27726.4656242274
+Aspirin,Aetna,23,21403.09020096942
+Aspirin,Aetna,24,24220.8621733419
+Aspirin,Aetna,25,22137.39500568464
+Aspirin,Aetna,26,26574.34785846179
+Aspirin,Aetna,27,26010.051827183237
+Aspirin,Aetna,28,28198.26810206866
+Aspirin,Aetna,29,30842.928000260963
+Aspirin,Aetna,30,22111.086332143546
+Aspirin,Blue Cross,1,28305.39782678712
+Aspirin,Blue Cross,2,30524.065663823647
+Aspirin,Blue Cross,3,33216.62237956732
+Aspirin,Blue Cross,4,21031.607914819928
+Aspirin,Blue Cross,5,34917.74643756163
+Aspirin,Blue Cross,6,29837.1317462027
+Aspirin,Blue Cross,7,19754.175000224823
+Aspirin,Blue Cross,8,26650.36529196447
+Aspirin,Blue Cross,9,25551.306916949547
+Aspirin,Blue Cross,10,23746.745797648193
+Aspirin,Blue Cross,11,20238.868080264292
+Aspirin,Blue Cross,12,26166.21491778662
+Aspirin,Blue Cross,13,21165.88109813023
+Aspirin,Blue Cross,14,17126.69938000157
+Aspirin,Blue Cross,15,26264.741236421996
+Aspirin,Blue Cross,16,26998.62956071056
+Aspirin,Blue Cross,17,28408.133351372675
+Aspirin,Blue Cross,18,23835.511121215473
+Aspirin,Blue Cross,19,24382.826192096094
+Aspirin,Blue Cross,20,24007.38668402096
+Aspirin,Blue Cross,21,26591.962359120258
+Aspirin,Blue Cross,22,28127.398126585496
+Aspirin,Blue Cross,23,25409.024468538388
+Aspirin,Blue Cross,24,22176.67882994394
+Aspirin,Blue Cross,25,24759.28184363018
+Aspirin,Blue Cross,26,25235.823913035798
+Aspirin,Blue Cross,27,30895.472047667583
+Aspirin,Blue Cross,28,24906.316730123475
+Aspirin,Blue Cross,29,24778.595492785764
+Aspirin,Blue Cross,30,31511.34684122864
+Aspirin,Cigna,1,25776.17797050982
+Aspirin,Cigna,2,30749.355337779576
+Aspirin,Cigna,3,20849.35031457525
+Aspirin,Cigna,4,26441.32669192536
+Aspirin,Cigna,5,28966.05126943813
+Aspirin,Cigna,6,27989.979842262743
+Aspirin,Cigna,7,28232.440297847923
+Aspirin,Cigna,8,22400.713105692917
+Aspirin,Cigna,9,28080.14085096985
+Aspirin,Cigna,10,22034.847960438066
+Aspirin,Cigna,11,25056.12593524094
+Aspirin,Cigna,12,32808.042767234416
+Aspirin,Cigna,13,25192.588297115937
+Aspirin,Cigna,14,29127.75717388159
+Aspirin,Cigna,15,22322.01365384184
+Aspirin,Cigna,16,23907.725899711964
+Aspirin,Cigna,17,28866.87456598684
+Aspirin,Cigna,18,26850.674827265935
+Aspirin,Cigna,19,20768.49065689004
+Aspirin,Cigna,20,29691.707433456355
+Aspirin,Cigna,21,32425.42256905634
+Aspirin,Cigna,22,25855.629798747457
+Aspirin,Cigna,23,28546.49785605549
+Aspirin,Cigna,24,25178.785040510444
+Aspirin,Cigna,25,22940.914832771487
+Aspirin,Cigna,26,18513.939248919396
+Aspirin,Cigna,27,22374.389794187424
+Aspirin,Cigna,28,34397.54644518306
+Aspirin,Cigna,29,28713.00792037163
+Aspirin,Cigna,30,29121.499420647662
+Aspirin,Medicare,1,35040.243074630744
+Aspirin,Medicare,2,25212.3940790545
+Aspirin,Medicare,3,26455.961893314718
+Aspirin,Medicare,4,26254.08717712224
+Aspirin,Medicare,5,22557.63215819952
+Aspirin,Medicare,6,22211.099816866477
+Aspirin,Medicare,7,24062.150651955388
+Aspirin,Medicare,8,25391.219313640973
+Aspirin,Medicare,9,32852.621340238904
+Aspirin,Medicare,10,22268.98794190823
+Aspirin,Medicare,11,33990.859963217954
+Aspirin,Medicare,12,26625.29582359741
+Aspirin,Medicare,13,22951.06972815163
+Aspirin,Medicare,14,26111.313254157027
+Aspirin,Medicare,15,25184.164494556273
+Aspirin,Medicare,16,28610.78304880298
+Aspirin,Medicare,17,26804.97181207195
+Aspirin,Medicare,18,24058.179640054987
+Aspirin,Medicare,19,24983.650660219595
+Aspirin,Medicare,20,25083.187293647024
+Aspirin,Medicare,21,28246.511637160245
+Aspirin,Medicare,22,23609.27623150223
+Aspirin,Medicare,23,28317.092495926103
+Aspirin,Medicare,24,16561.170436088396
+Aspirin,Medicare,25,28968.36933073708
+Aspirin,Medicare,26,22928.19834552257
+Aspirin,Medicare,27,17130.4377448885
+Aspirin,Medicare,28,23632.74804452568
+Aspirin,Medicare,29,30302.984662035113
+Aspirin,Medicare,30,23388.097396076086
+Aspirin,UnitedHealthcare,1,29501.047519404652
+Aspirin,UnitedHealthcare,2,29511.535323090964
+Aspirin,UnitedHealthcare,3,31125.165109494075
+Aspirin,UnitedHealthcare,4,31089.660819006316
+Aspirin,UnitedHealthcare,5,27936.19435436382
+Aspirin,UnitedHealthcare,6,22763.696279735603
+Aspirin,UnitedHealthcare,7,30483.523662017204
+Aspirin,UnitedHealthcare,8,23221.678498789515
+Aspirin,UnitedHealthcare,9,29086.852188570097
+Aspirin,UnitedHealthcare,10,12442.056715469384
+Aspirin,UnitedHealthcare,11,36090.58578726278
+Aspirin,UnitedHealthcare,12,19041.653822741686
+Aspirin,UnitedHealthcare,13,19702.830889245175
+Aspirin,UnitedHealthcare,14,33101.776225129644
+Aspirin,UnitedHealthcare,15,23128.032365928193
+Aspirin,UnitedHealthcare,16,25532.509127618378
+Aspirin,UnitedHealthcare,17,23728.70789205759
+Aspirin,UnitedHealthcare,18,24703.876246432064
+Aspirin,UnitedHealthcare,19,26926.4555468812
+Aspirin,UnitedHealthcare,20,26534.98578415531
+Aspirin,UnitedHealthcare,21,22133.88103703707
+Aspirin,UnitedHealthcare,22,25372.033900288086
+Aspirin,UnitedHealthcare,23,25618.73947508051
+Aspirin,UnitedHealthcare,24,29756.546759253506
+Aspirin,UnitedHealthcare,25,16736.519280579247
+Aspirin,UnitedHealthcare,26,26122.152330152676
+Aspirin,UnitedHealthcare,27,24585.355374284005
+Aspirin,UnitedHealthcare,28,36096.69851814196
+Aspirin,UnitedHealthcare,29,24271.778025378302
+Aspirin,UnitedHealthcare,30,19914.95990534711
+Ibuprofen,Aetna,1,24343.17640775083
+Ibuprofen,Aetna,2,29153.18262170367
+Ibuprofen,Aetna,3,31959.628472225482
+Ibuprofen,Aetna,4,23380.163778406197
+Ibuprofen,Aetna,5,20212.67925449706
+Ibuprofen,Aetna,6,20893.256505333302
+Ibuprofen,Aetna,7,33442.35691982038
+Ibuprofen,Aetna,8,22066.58978119992
+Ibuprofen,Aetna,9,27775.361823657076
+Ibuprofen,Aetna,10,29846.914510002767
+Ibuprofen,Aetna,11,28293.07548581769
+Ibuprofen,Aetna,12,27619.745035301403
+Ibuprofen,Aetna,13,26077.75350506712
+Ibuprofen,Aetna,14,21959.011995167246
+Ibuprofen,Aetna,15,25408.11024963082
+Ibuprofen,Aetna,16,27319.260959535677
+Ibuprofen,Aetna,17,27252.907698160823
+Ibuprofen,Aetna,18,26194.0567361275
+Ibuprofen,Aetna,19,29422.26625652906
+Ibuprofen,Aetna,20,20473.840405653493
+Ibuprofen,Aetna,21,27609.254867150583
+Ibuprofen,Aetna,22,24199.305116964002
+Ibuprofen,Aetna,23,27416.368754396804
+Ibuprofen,Aetna,24,25211.775524051845
+Ibuprofen,Aetna,25,22632.06040195374
+Ibuprofen,Aetna,26,24402.04997165405
+Ibuprofen,Aetna,27,27257.511339085806
+Ibuprofen,Aetna,28,18493.458420104023
+Ibuprofen,Aetna,29,33574.1714372602
+Ibuprofen,Aetna,30,26666.529480416964
+Ibuprofen,Blue Cross,1,16777.675076474483
+Ibuprofen,Blue Cross,2,26547.933237524812
+Ibuprofen,Blue Cross,3,25752.548824498084
+Ibuprofen,Blue Cross,4,16610.08004689582
+Ibuprofen,Blue Cross,5,25052.18431517471
+Ibuprofen,Blue Cross,6,25050.833375436534
+Ibuprofen,Blue Cross,7,26613.549593567954
+Ibuprofen,Blue Cross,8,26799.18788034457
+Ibuprofen,Blue Cross,9,24214.73028240354
+Ibuprofen,Blue Cross,10,19526.287354944874
+Ibuprofen,Blue Cross,11,30948.267482670184
+Ibuprofen,Blue Cross,12,22152.209442133695
+Ibuprofen,Blue Cross,13,29238.258778434927
+Ibuprofen,Blue Cross,14,26893.480693375204
+Ibuprofen,Blue Cross,15,31823.333306495795
+Ibuprofen,Blue Cross,16,27100.965972498965
+Ibuprofen,Blue Cross,17,28328.097259240643
+Ibuprofen,Blue Cross,18,24582.772841407437
+Ibuprofen,Blue Cross,19,23023.703664876924
+Ibuprofen,Blue Cross,20,26842.83512546287
+Ibuprofen,Blue Cross,21,31574.661734353376
+Ibuprofen,Blue Cross,22,20180.754295420436
+Ibuprofen,Blue Cross,23,20911.226947373456
+Ibuprofen,Blue Cross,24,24805.413930581824
+Ibuprofen,Blue Cross,25,30566.331162138114
+Ibuprofen,Blue Cross,26,24386.95204419372
+Ibuprofen,Blue Cross,27,23896.900192113575
+Ibuprofen,Blue Cross,28,28681.677868073297
+Ibuprofen,Blue Cross,29,33521.43999490882
+Ibuprofen,Blue Cross,30,27512.199938308902
+Ibuprofen,Cigna,1,28264.49036682061
+Ibuprofen,Cigna,2,20962.24689866482
+Ibuprofen,Cigna,3,28627.10518949373
+Ibuprofen,Cigna,4,22757.130472468856
+Ibuprofen,Cigna,5,20289.815576761874
+Ibuprofen,Cigna,6,22227.541771791068
+Ibuprofen,Cigna,7,21814.273599446235
+Ibuprofen,Cigna,8,28912.576432339672
+Ibuprofen,Cigna,9,25610.27689566817
+Ibuprofen,Cigna,10,29617.899180194036
+Ibuprofen,Cigna,11,24757.68167646351
+Ibuprofen,Cigna,12,28469.233818015266
+Ibuprofen,Cigna,13,24695.3638165031
+Ibuprofen,Cigna,14,26707.45121715049
+Ibuprofen,Cigna,15,21597.86087217658
+Ibuprofen,Cigna,16,24148.34741106601
+Ibuprofen,Cigna,17,25751.423967603117
+Ibuprofen,Cigna,18,22061.917944052228
+Ibuprofen,Cigna,19,21334.330291169787
+Ibuprofen,Cigna,20,28209.49151997571
+Ibuprofen,Cigna,21,24117.66232879053
+Ibuprofen,Cigna,22,18659.51804438107
+Ibuprofen,Cigna,23,18102.066252720662
+Ibuprofen,Cigna,24,30516.679064292606
+Ibuprofen,Cigna,25,26008.050969588352
+Ibuprofen,Cigna,26,24093.10165473963
+Ibuprofen,Cigna,27,34276.6968386762
+Ibuprofen,Cigna,28,25836.56866686654
+Ibuprofen,Cigna,29,16795.043644661422
+Ibuprofen,Cigna,30,30358.287114753504
+Ibuprofen,Medicare,1,21952.20838576838
+Ibuprofen,Medicare,2,23725.252687704535
+Ibuprofen,Medicare,3,21141.696226194923
+Ibuprofen,Medicare,4,25368.94397236884
+Ibuprofen,Medicare,5,20745.517795770655
+Ibuprofen,Medicare,6,24360.71419252893
+Ibuprofen,Medicare,7,24757.526544141256
+Ibuprofen,Medicare,8,24802.47897013174
+Ibuprofen,Medicare,9,21585.24987156334
+Ibuprofen,Medicare,10,27215.268873957153
+Ibuprofen,Medicare,11,29252.006967638143
+Ibuprofen,Medicare,12,22023.5255835092
+Ibuprofen,Medicare,13,22085.49275295914
+Ibuprofen,Medicare,14,25489.302466317065
+Ibuprofen,Medicare,15,36325.43366247389
+Ibuprofen,Medicare,16,24795.54746841872
+Ibuprofen,Medicare,17,24980.41963910971
+Ibuprofen,Medicare,18,24217.224727829733
+Ibuprofen,Medicare,19,15550.653974819417
+Ibuprofen,Medicare,20,30376.47599973591
+Ibuprofen,Medicare,21,29359.662980113797
+Ibuprofen,Medicare,22,24266.704851915685
+Ibuprofen,Medicare,23,23431.023324614227
+Ibuprofen,Medicare,24,26775.708404825655
+Ibuprofen,Medicare,25,22725.680135404084
+Ibuprofen,Medicare,26,27542.691582463543
+Ibuprofen,Medicare,27,26258.579403923814
+Ibuprofen,Medicare,28,20858.147555943196
+Ibuprofen,Medicare,29,25297.85618200445
+Ibuprofen,Medicare,30,24046.694090195957
+Ibuprofen,UnitedHealthcare,1,30888.7525186647
+Ibuprofen,UnitedHealthcare,2,22396.872779568646
+Ibuprofen,UnitedHealthcare,3,23673.42824860254
+Ibuprofen,UnitedHealthcare,4,32495.432809274113
+Ibuprofen,UnitedHealthcare,5,38350.10861637961
+Ibuprofen,UnitedHealthcare,6,31225.550756992114
+Ibuprofen,UnitedHealthcare,7,29596.744431675615
+Ibuprofen,UnitedHealthcare,8,20963.828779435822
+Ibuprofen,UnitedHealthcare,9,24016.224403455246
+Ibuprofen,UnitedHealthcare,10,21033.912295056605
+Ibuprofen,UnitedHealthcare,11,22214.09991850308
+Ibuprofen,UnitedHealthcare,12,28225.051197168334
+Ibuprofen,UnitedHealthcare,13,24625.146449166547
+Ibuprofen,UnitedHealthcare,14,26676.86995664237
+Ibuprofen,UnitedHealthcare,15,23549.912248889574
+Ibuprofen,UnitedHealthcare,16,29781.921250523133
+Ibuprofen,UnitedHealthcare,17,29252.127929657643
+Ibuprofen,UnitedHealthcare,18,15396.5617063407
+Ibuprofen,UnitedHealthcare,19,31268.89793711294
+Ibuprofen,UnitedHealthcare,20,33700.125244993666
+Ibuprofen,UnitedHealthcare,21,26904.197278824035
+Ibuprofen,UnitedHealthcare,22,23709.78401244962
+Ibuprofen,UnitedHealthcare,23,25167.18876579288
+Ibuprofen,UnitedHealthcare,24,31427.830745650772
+Ibuprofen,UnitedHealthcare,25,29882.972638986008
+Ibuprofen,UnitedHealthcare,26,25854.988889122087
+Ibuprofen,UnitedHealthcare,27,29528.780304320833
+Ibuprofen,UnitedHealthcare,28,23238.360408503293
+Ibuprofen,UnitedHealthcare,29,22970.781580755873
+Ibuprofen,UnitedHealthcare,30,28642.700337154547
+Lipitor,Aetna,1,23420.8871068543
+Lipitor,Aetna,2,25844.138085609222
+Lipitor,Aetna,3,26991.105172781256
+Lipitor,Aetna,4,18809.75542210539
+Lipitor,Aetna,5,21707.187136341014
+Lipitor,Aetna,6,25575.533664333518
+Lipitor,Aetna,7,27729.84131183882
+Lipitor,Aetna,8,26250.337334575164
+Lipitor,Aetna,9,27067.37255707224
+Lipitor,Aetna,10,32285.465875321937
+Lipitor,Aetna,11,10760.999492919236
+Lipitor,Aetna,12,19357.52284693497
+Lipitor,Aetna,13,29634.701408105586
+Lipitor,Aetna,14,29423.26605934192
+Lipitor,Aetna,15,27548.204446442473
+Lipitor,Aetna,16,26686.252459592622
+Lipitor,Aetna,17,28483.96606698196
+Lipitor,Aetna,18,24722.992343141843
+Lipitor,Aetna,19,18946.132035585306
+Lipitor,Aetna,20,28975.48665830336
+Lipitor,Aetna,21,29644.252252622133
+Lipitor,Aetna,22,27990.79294875617
+Lipitor,Aetna,23,28611.847416295255
+Lipitor,Aetna,24,29914.5066619188
+Lipitor,Aetna,25,25625.531450281524
+Lipitor,Aetna,26,19730.161748045142
+Lipitor,Aetna,27,30299.207908257995
+Lipitor,Aetna,28,21599.001998938824
+Lipitor,Aetna,29,25088.958505205697
+Lipitor,Aetna,30,34761.34051848967
+Lipitor,Blue Cross,1,35455.3338918478
+Lipitor,Blue Cross,2,28008.144791680537
+Lipitor,Blue Cross,3,22180.250260058332
+Lipitor,Blue Cross,4,22761.383914543614
+Lipitor,Blue Cross,5,23246.493362199948
+Lipitor,Blue Cross,6,31760.263547160655
+Lipitor,Blue Cross,7,31548.213006991493
+Lipitor,Blue Cross,8,25249.649649777766
+Lipitor,Blue Cross,9,22690.25986288232
+Lipitor,Blue Cross,10,29960.619997967016
+Lipitor,Blue Cross,11,24505.321817554395
+Lipitor,Blue Cross,12,26627.956679558265
+Lipitor,Blue Cross,13,28952.85432213904
+Lipitor,Blue Cross,14,26200.83943658352
+Lipitor,Blue Cross,15,28631.38913139951
+Lipitor,Blue Cross,16,27880.96342612878
+Lipitor,Blue Cross,17,24226.58960885758
+Lipitor,Blue Cross,18,24662.460916708227
+Lipitor,Blue Cross,19,30330.010286815374
+Lipitor,Blue Cross,20,26117.47354799002
+Lipitor,Blue Cross,21,28200.54377762682
+Lipitor,Blue Cross,22,25459.760505413564
+Lipitor,Blue Cross,23,31440.150768240088
+Lipitor,Blue Cross,24,26004.216692365724
+Lipitor,Blue Cross,25,24727.32167518771
+Lipitor,Blue Cross,26,28224.709363509242
+Lipitor,Blue Cross,27,28337.661899830346
+Lipitor,Blue Cross,28,26861.183768700514
+Lipitor,Blue Cross,29,26193.68160182138
+Lipitor,Blue Cross,30,26067.249474944696
+Lipitor,Cigna,1,25522.273339540432
+Lipitor,Cigna,2,25358.996743533273
+Lipitor,Cigna,3,23456.04032217052
+Lipitor,Cigna,4,26823.62106618107
+Lipitor,Cigna,5,30283.28098694783
+Lipitor,Cigna,6,27424.338475954555
+Lipitor,Cigna,7,31608.017585022044
+Lipitor,Cigna,8,26877.042655618567
+Lipitor,Cigna,9,25557.3652165024
+Lipitor,Cigna,10,22698.049269376283
+Lipitor,Cigna,11,27260.452032306974
+Lipitor,Cigna,12,27547.376653730265
+Lipitor,Cigna,13,30946.606285772305
+Lipitor,Cigna,14,25857.72855779651
+Lipitor,Cigna,15,30795.716371687347
+Lipitor,Cigna,16,22553.345891899688
+Lipitor,Cigna,17,22259.488882655627
+Lipitor,Cigna,18,18663.835405491573
+Lipitor,Cigna,19,23980.30265341847
+Lipitor,Cigna,20,25041.057932906544
+Lipitor,Cigna,21,21141.522684179807
+Lipitor,Cigna,22,24608.51372945653
+Lipitor,Cigna,23,28967.085224692702
+Lipitor,Cigna,24,20998.884356251667
+Lipitor,Cigna,25,12878.030967913242
+Lipitor,Cigna,26,19371.929004872964
+Lipitor,Cigna,27,28338.221910096396
+Lipitor,Cigna,28,29813.931768540067
+Lipitor,Cigna,29,23862.24714392204
+Lipitor,Cigna,30,32741.92097464777
+Lipitor,Medicare,1,20405.843077488622
+Lipitor,Medicare,2,31639.154552670923
+Lipitor,Medicare,3,22744.551466325214
+Lipitor,Medicare,4,26795.85398677723
+Lipitor,Medicare,5,24358.00813133722
+Lipitor,Medicare,6,28104.262871829014
+Lipitor,Medicare,7,30512.434593134745
+Lipitor,Medicare,8,26055.04803006439
+Lipitor,Medicare,9,28871.15890796312
+Lipitor,Medicare,10,27541.32635181547
+Lipitor,Medicare,11,30317.022596786337
+Lipitor,Medicare,12,26445.48455189201
+Lipitor,Medicare,13,31029.187925818907
+Lipitor,Medicare,14,26538.655489014
+Lipitor,Medicare,15,32930.756332844474
+Lipitor,Medicare,16,25088.466770731866
+Lipitor,Medicare,17,26484.595583578164
+Lipitor,Medicare,18,26813.436049036893
+Lipitor,Medicare,19,22760.274717691158
+Lipitor,Medicare,20,33343.93741448234
+Lipitor,Medicare,21,27415.76514111264
+Lipitor,Medicare,22,25473.949071383766
+Lipitor,Medicare,23,21674.52528877793
+Lipitor,Medicare,24,21114.495517753778
+Lipitor,Medicare,25,29831.70180955479
+Lipitor,Medicare,26,27725.890956215517
+Lipitor,Medicare,27,27798.895648160833
+Lipitor,Medicare,28,25267.988308106884
+Lipitor,Medicare,29,25762.495340888774
+Lipitor,Medicare,30,19400.34588615495
+Lipitor,UnitedHealthcare,1,24236.83493257234
+Lipitor,UnitedHealthcare,2,24014.07992668549
+Lipitor,UnitedHealthcare,3,23926.72386783984
+Lipitor,UnitedHealthcare,4,20598.51030952543
+Lipitor,UnitedHealthcare,5,19368.045617718955
+Lipitor,UnitedHealthcare,6,26073.41780829502
+Lipitor,UnitedHealthcare,7,26775.755453181784
+Lipitor,UnitedHealthcare,8,21594.67856613954
+Lipitor,UnitedHealthcare,9,33239.116872203485
+Lipitor,UnitedHealthcare,10,26042.719530208957
+Lipitor,UnitedHealthcare,11,28414.85735003685
+Lipitor,UnitedHealthcare,12,20569.660853645753
+Lipitor,UnitedHealthcare,13,27051.554724590478
+Lipitor,UnitedHealthcare,14,27496.444665241404
+Lipitor,UnitedHealthcare,15,35582.169934765014
+Lipitor,UnitedHealthcare,16,25752.66677325277
+Lipitor,UnitedHealthcare,17,26923.337056713954
+Lipitor,UnitedHealthcare,18,29607.29324859835
+Lipitor,UnitedHealthcare,19,23938.546717348963
+Lipitor,UnitedHealthcare,20,27957.881026897743
+Lipitor,UnitedHealthcare,21,32968.009145740274
+Lipitor,UnitedHealthcare,22,28660.646862474627
+Lipitor,UnitedHealthcare,23,23950.928566627088
+Lipitor,UnitedHealthcare,24,25131.426738796836
+Lipitor,UnitedHealthcare,25,28981.25147488937
+Lipitor,UnitedHealthcare,26,21534.117907045584
+Lipitor,UnitedHealthcare,27,27643.890953913135
+Lipitor,UnitedHealthcare,28,29108.33236775348
+Lipitor,UnitedHealthcare,29,25943.743635121282
+Lipitor,UnitedHealthcare,30,25788.436732071474
+Paracetamol,Aetna,1,19368.229345160624
+Paracetamol,Aetna,2,24594.931710566998
+Paracetamol,Aetna,3,30006.801292946453
+Paracetamol,Aetna,4,24452.43777209301
+Paracetamol,Aetna,5,27002.284034015775
+Paracetamol,Aetna,6,23636.233817509143
+Paracetamol,Aetna,7,27627.313149948666
+Paracetamol,Aetna,8,25557.316965225047
+Paracetamol,Aetna,9,28050.045062332807
+Paracetamol,Aetna,10,25868.23985089547
+Paracetamol,Aetna,11,21505.023522943244
+Paracetamol,Aetna,12,21891.253895352118
+Paracetamol,Aetna,13,29253.827753791757
+Paracetamol,Aetna,14,35602.67520803031
+Paracetamol,Aetna,15,23665.48333863324
+Paracetamol,Aetna,16,22677.85436663199
+Paracetamol,Aetna,17,27323.533079673798
+Paracetamol,Aetna,18,28744.884793971665
+Paracetamol,Aetna,19,24777.002749971693
+Paracetamol,Aetna,20,25508.169305548945
+Paracetamol,Aetna,21,28965.06200449753
+Paracetamol,Aetna,22,30877.435724794497
+Paracetamol,Aetna,23,25823.945317320267
+Paracetamol,Aetna,24,26660.66296860873
+Paracetamol,Aetna,25,19646.95568757217
+Paracetamol,Aetna,26,26117.151722665603
+Paracetamol,Aetna,27,22452.203266221353
+Paracetamol,Aetna,28,26320.409012948523
+Paracetamol,Aetna,29,21639.58513989747
+Paracetamol,Aetna,30,28289.024929549574
+Paracetamol,Blue Cross,1,27925.81657201798
+Paracetamol,Blue Cross,2,22973.05077945349
+Paracetamol,Blue Cross,3,27469.834004004744
+Paracetamol,Blue Cross,4,23250.649778019197
+Paracetamol,Blue Cross,5,27312.391247090236
+Paracetamol,Blue Cross,6,21597.419399271967
+Paracetamol,Blue Cross,7,26512.48913415278
+Paracetamol,Blue Cross,8,22735.088499732465
+Paracetamol,Blue Cross,9,18375.993135847548
+Paracetamol,Blue Cross,10,27300.757175474202
+Paracetamol,Blue Cross,11,27911.801045156764
+Paracetamol,Blue Cross,12,24015.262629931323
+Paracetamol,Blue Cross,13,23564.52041002642
+Paracetamol,Blue Cross,14,27237.673815702175
+Paracetamol,Blue Cross,15,25057.314767507734
+Paracetamol,Blue Cross,16,28293.896682419065
+Paracetamol,Blue Cross,17,29516.775004653446
+Paracetamol,Blue Cross,18,21795.424207310614
+Paracetamol,Blue Cross,19,20639.501239140613
+Paracetamol,Blue Cross,20,23227.76525393132
+Paracetamol,Blue Cross,21,24983.055872502435
+Paracetamol,Blue Cross,22,26732.72992911398
+Paracetamol,Blue Cross,23,21150.53540726873
+Paracetamol,Blue Cross,24,24053.6816027958
+Paracetamol,Blue Cross,25,23723.108948233512
+Paracetamol,Blue Cross,26,24890.81267738005
+Paracetamol,Blue Cross,27,24429.21013990525
+Paracetamol,Blue Cross,28,23470.18219006731
+Paracetamol,Blue Cross,29,25545.008721688828
+Paracetamol,Blue Cross,30,19513.167113821193
+Paracetamol,Cigna,1,25171.50353314211
+Paracetamol,Cigna,2,47266.05102493614
+Paracetamol,Cigna,3,23052.243788479802
+Paracetamol,Cigna,4,32985.49512682327
+Paracetamol,Cigna,5,27878.234846374588
+Paracetamol,Cigna,6,25118.648769078693
+Paracetamol,Cigna,7,19776.55112475719
+Paracetamol,Cigna,8,30347.738005011925
+Paracetamol,Cigna,9,29992.942159986866
+Paracetamol,Cigna,10,21789.351476442454
+Paracetamol,Cigna,11,22343.332835162168
+Paracetamol,Cigna,12,22039.91125835807
+Paracetamol,Cigna,13,19859.89180956323
+Paracetamol,Cigna,14,26657.299062130813
+Paracetamol,Cigna,15,32401.476373080022
+Paracetamol,Cigna,16,30029.013193712202
+Paracetamol,Cigna,17,23332.120341047437
+Paracetamol,Cigna,18,28667.152329622517
+Paracetamol,Cigna,19,24769.315961743396
+Paracetamol,Cigna,20,22535.817253076595
+Paracetamol,Cigna,21,27500.41659480936
+Paracetamol,Cigna,22,25038.10026990552
+Paracetamol,Cigna,23,25820.52441840644
+Paracetamol,Cigna,24,20197.239228855462
+Paracetamol,Cigna,25,27130.668043943715
+Paracetamol,Cigna,26,28335.46375453731
+Paracetamol,Cigna,27,18357.29736452445
+Paracetamol,Cigna,28,24994.256552915882
+Paracetamol,Cigna,29,25864.50908543336
+Paracetamol,Cigna,30,27578.794710440532
+Paracetamol,Medicare,1,21038.625466993388
+Paracetamol,Medicare,2,27163.057767794475
+Paracetamol,Medicare,3,22453.74081600289
+Paracetamol,Medicare,4,22078.467802764284
+Paracetamol,Medicare,5,23248.53622641726
+Paracetamol,Medicare,6,25475.54125247415
+Paracetamol,Medicare,7,31856.790408538847
+Paracetamol,Medicare,8,24284.498098732245
+Paracetamol,Medicare,9,26169.79525651523
+Paracetamol,Medicare,10,29209.443999949253
+Paracetamol,Medicare,11,27254.749905377113
+Paracetamol,Medicare,12,23134.573117393742
+Paracetamol,Medicare,13,23412.642880222644
+Paracetamol,Medicare,14,25920.006520896975
+Paracetamol,Medicare,15,21741.70128015818
+Paracetamol,Medicare,16,24678.15504339837
+Paracetamol,Medicare,17,17185.512270353745
+Paracetamol,Medicare,18,28579.168947441016
+Paracetamol,Medicare,19,20942.872986293612
+Paracetamol,Medicare,20,26879.432475500984
+Paracetamol,Medicare,21,26726.894621495252
+Paracetamol,Medicare,22,19696.39101352966
+Paracetamol,Medicare,23,33307.21340361344
+Paracetamol,Medicare,24,24828.32245716962
+Paracetamol,Medicare,25,21732.34615156852
+Paracetamol,Medicare,26,18362.572277983032
+Paracetamol,Medicare,27,29103.263236342988
+Paracetamol,Medicare,28,19566.71465496221
+Paracetamol,Medicare,29,28765.812521050604
+Paracetamol,Medicare,30,29030.8649548401
+Paracetamol,UnitedHealthcare,1,26375.626808811718
+Paracetamol,UnitedHealthcare,2,21760.100289127964
+Paracetamol,UnitedHealthcare,3,22370.3402698086
+Paracetamol,UnitedHealthcare,4,29428.29175860728
+Paracetamol,UnitedHealthcare,5,22398.51707702945
+Paracetamol,UnitedHealthcare,6,31698.63363830627
+Paracetamol,UnitedHealthcare,7,21691.058331008386
+Paracetamol,UnitedHealthcare,8,23264.401854903936
+Paracetamol,UnitedHealthcare,9,23778.215675842453
+Paracetamol,UnitedHealthcare,10,21909.416433263057
+Paracetamol,UnitedHealthcare,11,26871.635344875544
+Paracetamol,UnitedHealthcare,12,22934.506633954385
+Paracetamol,UnitedHealthcare,13,23620.30212576997
+Paracetamol,UnitedHealthcare,14,22314.32102561438
+Paracetamol,UnitedHealthcare,15,27813.040282359776
+Paracetamol,UnitedHealthcare,16,29421.28522806917
+Paracetamol,UnitedHealthcare,17,21915.53252831465
+Paracetamol,UnitedHealthcare,18,26128.618186297394
+Paracetamol,UnitedHealthcare,19,21233.28508042068
+Paracetamol,UnitedHealthcare,20,28449.37937153493
+Paracetamol,UnitedHealthcare,21,27107.72704591317
+Paracetamol,UnitedHealthcare,22,22637.276951839227
+Paracetamol,UnitedHealthcare,23,19746.03696883449
+Paracetamol,UnitedHealthcare,24,28827.77228041163
+Paracetamol,UnitedHealthcare,25,24752.52147674774
+Paracetamol,UnitedHealthcare,26,27946.610512149575
+Paracetamol,UnitedHealthcare,27,23643.686245027635
+Paracetamol,UnitedHealthcare,28,27594.543181182133
+Paracetamol,UnitedHealthcare,29,23992.09837605202
+Paracetamol,UnitedHealthcare,30,18128.727204911385
+Penicillin,Aetna,1,26107.638288072598
+Penicillin,Aetna,2,21103.458630883295
+Penicillin,Aetna,3,28327.965897778995
+Penicillin,Aetna,4,28325.17404149787
+Penicillin,Aetna,5,34759.41980472405
+Penicillin,Aetna,6,29954.967755794154
+Penicillin,Aetna,7,27173.170696137786
+Penicillin,Aetna,8,29342.162568336946
+Penicillin,Aetna,9,26777.769817136978
+Penicillin,Aetna,10,30443.075928446364
+Penicillin,Aetna,11,21436.46093497807
+Penicillin,Aetna,12,25990.120206141448
+Penicillin,Aetna,13,24824.2156247317
+Penicillin,Aetna,14,31364.803578016927
+Penicillin,Aetna,15,28072.50288292506
+Penicillin,Aetna,16,27117.704129331494
+Penicillin,Aetna,17,25129.730213454524
+Penicillin,Aetna,18,27230.47807075081
+Penicillin,Aetna,19,35048.4120373539
+Penicillin,Aetna,20,22741.167344725993
+Penicillin,Aetna,21,26550.875079363042
+Penicillin,Aetna,22,28561.222269556853
+Penicillin,Aetna,23,14201.020150203696
+Penicillin,Aetna,24,20710.229525151954
+Penicillin,Aetna,25,21287.310040222997
+Penicillin,Aetna,26,23851.667950952848
+Penicillin,Aetna,27,29762.603079471253
+Penicillin,Aetna,28,21233.83350746195
+Penicillin,Aetna,29,22692.488299077195
+Penicillin,Aetna,30,22921.195564535472
+Penicillin,Blue Cross,1,23335.617058043197
+Penicillin,Blue Cross,2,28907.339400448684
+Penicillin,Blue Cross,3,26320.248164496144
+Penicillin,Blue Cross,4,33844.93662432617
+Penicillin,Blue Cross,5,30642.027796014383
+Penicillin,Blue Cross,6,26921.681579665135
+Penicillin,Blue Cross,7,23375.55600614089
+Penicillin,Blue Cross,8,25449.584599562015
+Penicillin,Blue Cross,9,29645.203426476517
+Penicillin,Blue Cross,10,24148.774706489072
+Penicillin,Blue Cross,11,26308.910474170087
+Penicillin,Blue Cross,12,32525.857631966875
+Penicillin,Blue Cross,13,17652.861647939197
+Penicillin,Blue Cross,14,25372.924326642828
+Penicillin,Blue Cross,15,28967.44242972889
+Penicillin,Blue Cross,16,24455.752138816828
+Penicillin,Blue Cross,17,22929.187493863625
+Penicillin,Blue Cross,18,20146.995257619124
+Penicillin,Blue Cross,19,26772.566618231405
+Penicillin,Blue Cross,20,26990.201300186156
+Penicillin,Blue Cross,21,25234.70760958565
+Penicillin,Blue Cross,22,23213.838756749203
+Penicillin,Blue Cross,23,21354.24571527066
+Penicillin,Blue Cross,24,25041.03925221265
+Penicillin,Blue Cross,25,25430.055180129784
+Penicillin,Blue Cross,26,21533.72686823696
+Penicillin,Blue Cross,27,24521.868307236877
+Penicillin,Blue Cross,28,20434.756465728427
+Penicillin,Blue Cross,29,27031.005811458355
+Penicillin,Blue Cross,30,19739.442966924387
+Penicillin,Cigna,1,27669.459712524495
+Penicillin,Cigna,2,28421.37836756721
+Penicillin,Cigna,3,21442.233703231024
+Penicillin,Cigna,4,28925.67148552272
+Penicillin,Cigna,5,23090.59811267812
+Penicillin,Cigna,6,22048.745926664567
+Penicillin,Cigna,7,25642.82507349956
+Penicillin,Cigna,8,29112.45049501814
+Penicillin,Cigna,9,26917.002731409917
+Penicillin,Cigna,10,22042.20833840003
+Penicillin,Cigna,11,29335.288696400832
+Penicillin,Cigna,12,22733.88320317465
+Penicillin,Cigna,13,25572.556926397516
+Penicillin,Cigna,14,30860.461161545947
+Penicillin,Cigna,15,31481.764283725905
+Penicillin,Cigna,16,27681.504360209885
+Penicillin,Cigna,17,26207.79814446114
+Penicillin,Cigna,18,26986.661165703794
+Penicillin,Cigna,19,32628.627752366243
+Penicillin,Cigna,20,26791.927644695177
+Penicillin,Cigna,21,19969.29764741221
+Penicillin,Cigna,22,24545.114637635077
+Penicillin,Cigna,23,18670.49822734435
+Penicillin,Cigna,24,29517.55330558409
+Penicillin,Cigna,25,25326.01164951128
+Penicillin,Cigna,26,23564.270195099525
+Penicillin,Cigna,27,25064.891503254512
+Penicillin,Cigna,28,15310.292100628738
+Penicillin,Cigna,29,24723.857966014613
+Penicillin,Cigna,30,26740.161024072782
+Penicillin,Medicare,1,26900.447465786343
+Penicillin,Medicare,2,20948.00004715942
+Penicillin,Medicare,3,22588.87057748467
+Penicillin,Medicare,4,24412.705067266237
+Penicillin,Medicare,5,17560.597488792133
+Penicillin,Medicare,6,31571.761910121488
+Penicillin,Medicare,7,30326.464550439163
+Penicillin,Medicare,8,25040.79753941367
+Penicillin,Medicare,9,29176.252670131198
+Penicillin,Medicare,10,19629.844468156392
+Penicillin,Medicare,11,28092.036165344412
+Penicillin,Medicare,12,25561.324883175683
+Penicillin,Medicare,13,21603.55457879327
+Penicillin,Medicare,14,23649.832264358134
+Penicillin,Medicare,15,28646.424775938154
+Penicillin,Medicare,16,18819.84223787576
+Penicillin,Medicare,17,16463.93063239056
+Penicillin,Medicare,18,24649.395604307694
+Penicillin,Medicare,19,26760.69811653671
+Penicillin,Medicare,20,33335.130064750716
+Penicillin,Medicare,21,27586.59471759887
+Penicillin,Medicare,22,17109.6397439295
+Penicillin,Medicare,23,24139.375499581114
+Penicillin,Medicare,24,21734.247172541898
+Penicillin,Medicare,25,21497.021654070963
+Penicillin,Medicare,26,24976.830578830184
+Penicillin,Medicare,27,27600.708329616624
+Penicillin,Medicare,28,23632.40211652124
+Penicillin,Medicare,29,19445.610803597137
+Penicillin,Medicare,30,25193.738157299795
+Penicillin,UnitedHealthcare,1,19391.411587730396
+Penicillin,UnitedHealthcare,2,24921.43633902012
+Penicillin,UnitedHealthcare,3,26880.104710040632
+Penicillin,UnitedHealthcare,4,25586.009237450267
+Penicillin,UnitedHealthcare,5,25342.107800549584
+Penicillin,UnitedHealthcare,6,27136.44622186131
+Penicillin,UnitedHealthcare,7,24406.543845837095
+Penicillin,UnitedHealthcare,8,22105.718836683798
+Penicillin,UnitedHealthcare,9,20507.91747474148
+Penicillin,UnitedHealthcare,10,25009.096554067008
+Penicillin,UnitedHealthcare,11,28123.81717513981
+Penicillin,UnitedHealthcare,12,22914.541803095184
+Penicillin,UnitedHealthcare,13,20240.70716684887
+Penicillin,UnitedHealthcare,14,20535.809168439715
+Penicillin,UnitedHealthcare,15,25833.867153707448
+Penicillin,UnitedHealthcare,16,20422.279814379683
+Penicillin,UnitedHealthcare,17,22818.254781335523
+Penicillin,UnitedHealthcare,18,24808.51303618212
+Penicillin,UnitedHealthcare,19,28072.085360335535
+Penicillin,UnitedHealthcare,20,17857.45969279119
+Penicillin,UnitedHealthcare,21,20121.72272794517
+Penicillin,UnitedHealthcare,22,22126.173414847282
+Penicillin,UnitedHealthcare,23,26103.609776037534
+Penicillin,UnitedHealthcare,24,29863.652930817923
+Penicillin,UnitedHealthcare,25,25446.755693993455
+Penicillin,UnitedHealthcare,26,18989.862406655593
+Penicillin,UnitedHealthcare,27,23494.6844753885
+Penicillin,UnitedHealthcare,28,25965.113856220705
+Penicillin,UnitedHealthcare,29,31186.18341489625
+Penicillin,UnitedHealthcare,30,25497.05778461287

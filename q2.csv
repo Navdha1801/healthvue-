@@ -1,0 +1,19 @@
+Medical Condition,Admission Type,Duration of Stay
+Arthritis,Elective,10
+Arthritis,Emergency,2
+Arthritis,Urgent,15
+Asthma,Elective,9
+Asthma,Emergency,2
+Asthma,Urgent,13
+Cancer,Elective,15
+Cancer,Emergency,12
+Cancer,Urgent,18
+Diabetes,Elective,2
+Diabetes,Emergency,8
+Diabetes,Urgent,2
+Hypertension,Elective,1
+Hypertension,Emergency,23
+Hypertension,Urgent,12
+Obesity,Elective,15
+Obesity,Emergency,9
+Obesity,Urgent,13
